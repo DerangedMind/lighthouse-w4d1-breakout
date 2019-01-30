@@ -10,66 +10,42 @@
 - IN clause and Subqueries
 - Aggregation with Group By
 
-### Query: Get all the albums that have a tag of 'electronic' or 'Dance'
+### Query 1: Get all the album names that have a tag of 'electronic' or 'Dance'
 
-```SQL Query
-  SELECT DISTINCT albums.title
-  FROM albums
-  INNER JOIN artists
-  ON albums.artist_id = artists.id
-  INNER JOIN artists_tags
-  ON artists.id = artists_tags.artist_id
-  INNER JOIN tags
-  ON artists_tags.tag_id = tags.id
-  WHERE tags.name IN ('electronic','dance','instrumental');
-```
+Our main goal here is to find all of the album names where the artist is associated with the tag (or genre) 'electronic' or 'dance'.
 
-- OR
-- IN
+To do this, we need to breakdown the problem a bit further. This is my approach to solving this, but that doesn't mean it will be the same for everyone.
 
-```SQL Query
-SELECT
-```
+#### Breakdown: Get all tags
 
-  ### Query: Get the number of tags according to each artist
 
-```SQL Query
-SELECT artists.name, artists.id, count(artists_tags.tag_id)
-FROM artists
-INNER JOIN artists_tags
-ON artists.id = artists_tags.artist_id
-GROUP BY artists.id, artists.name;
-```
 
-- group by
-- having
+#### Breakdown: Get all tags with name 'electronic'
 
-### Query: Count the number of artists per albums released after 2000 where the count of album is greater than 1
 
-```SQL Query
-SELECT artists.name,  count(albums.id)
-  FROM albums
-  INNER JOIN artists
-  ON albums.artist_id = artists.id
-  GROUP BY artists.name
-  HAVING count(albums.id) > 1;
-```
 
-### Using a Subquery
+#### Breakdown: Get all tags with name 'electronic' or 'dance'
 
-```SQL Query
-  SELECT DISTINCT albums.title
-  FROM albums
-  INNER JOIN artists
-  ON albums.artist_id = artists.id
-  INNER JOIN artists_tags
-  ON artists.id = artists_tags.artist_id
-  WHERE artists_tags.tag_id IN (
 
-    SELECT id from tags where id > 2
 
-  );
-```
+#### Breakdown: Get all artists and their tags
 
-- Subquery with IN
-- filter the subquery with where
+
+
+#### Breakdown: Get all artists with tag 'electronic' or 'dance'
+
+
+
+#### Breakdown: Get all the album names that have a tag of 'electronic' or 'Dance'
+
+
+
+#### Breakdown: Get the number of tags according to each artist
+
+
+
+### Query 2: Count the number of artists per albums released after 2000 where the count of album is greater than 1
+
+
+
+### Bonus: Using a Subquery, find all albums where the artist has more than two tags

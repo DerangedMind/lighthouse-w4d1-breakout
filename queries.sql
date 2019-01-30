@@ -1,37 +1,37 @@
-SELECT *                   
-FROM tags, artists, artists_tags
-WHERE artists_tags.artist_id = artists.id
-  AND artists_tags.tag_id = tags.id
-  AND tags.name = 'electronic';
+SELECT *
+  FROM tags, artists, artists_tags
+  WHERE artists_tags.artist_id = artists.id
+    AND artists_tags.tag_id = tags.id
+    AND tags.name = 'electronic';
 
 SELECT albums.title, artists.name
-FROM albums
-INNER JOIN artists
-ON artists.id = albums.artist_id
-INNER JOIN artists_tags
-ON artists_tags.artist_id = artists.id
-INNER JOIN tags
-ON artists_tags.tag_id = tags.id
-WHERE tags.name = 'electronic' or tags.name = 'dance';
+  FROM albums
+  INNER JOIN artists
+    ON artists.id = albums.artist_id
+  INNER JOIN artists_tags
+    ON artists_tags.artist_id = artists.id
+  INNER JOIN tags
+    ON artists_tags.tag_id = tags.id
+  WHERE tags.name = 'electronic' or tags.name = 'dance';
 
 SELECT artists.name, count(*) as nb_of_tags
-FROM artists
-INNER JOIN artists_tags
-ON artists_tags.artist_id = artists.id
-INNER JOIN tags
-ON artists_tags.tag_id = tags.id
-WHERE tags.name IN ('electronic', 'instrumental')
-GROUP BY artists.name
-HAVING count(*) >= 2;
+  FROM artists
+  INNER JOIN artists_tags
+    ON artists_tags.artist_id = artists.id
+  INNER JOIN tags
+    ON artists_tags.tag_id = tags.id
+  WHERE tags.name IN ('electronic', 'instrumental')
+  GROUP BY artists.name
+  HAVING count(*) >= 2;
 
 SELECT artists.name, count(*) as nb_of_tags
-FROM artists
-INNER JOIN artists_tags
-ON artists_tags.artist_id = artists.id
-INNER JOIN tags
-ON artists_tags.tag_id = tags.id
-WHERE tags.name IN (SELECT name from tags where id > 2)
-GROUP BY artists.name;
+  FROM artists
+  INNER JOIN artists_tags
+    ON artists_tags.artist_id = artists.id
+  INNER JOIN tags
+    ON artists_tags.tag_id = tags.id
+  WHERE tags.name IN (SELECT name from tags where id > 2)
+  GROUP BY artists.name;
 
 
 ### Query: Count the number of artists per albums released after 2000 where the count of album is greater than 1
